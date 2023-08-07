@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% block content %}
+
+    <div class="post">
+        <a href="{% url 'edit_post' pk=post.pk %}">Edit</a>
+        <a href="{% url 'delete_post' pk=post.pk %}">Delete</a>
+        <h2>{{ post.title }}</h2>
+        <div class="date">{{ post.created_date }}</div>
+        <p>{{ post.content }} </p>
+    </div>
+
+    <hr>
+    <div class="comments">
+        <h4>Comments</h4>
+        {% for comment in comments %}
+
+            <p><small>{{ comment.author }}</small></p>
+            <p> {{ comment.text }} </p>
+            <small> {{ comment.date_posted }} </small>
+
+        {% endfor %}
+        <br>  <a href="{% url 'comment' pk=post.pk %}">Comment</a>
+    </div>
+
+
+{% endblock %}
