@@ -7,7 +7,7 @@ from .forms import CreatePost, CreateComment
 
 # Create your views here.
 def home(request):
-    posts = Post.objects.all()
+    posts = Post.objects.filter(published_date__isnull=False)
     context = {'posts':posts}
     return render(request, 'blog/home.html', context)
 
@@ -26,9 +26,8 @@ def create_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            form.publication_date = timezone.now()
             post.save()
-            return redirect('home')
+            return redirect('blog-home')
     context = {'form': form}
     return render(request, 'blog/create_post.html', context)
 
@@ -54,7 +53,7 @@ def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method=='POST' :
         post.delete()
-        return redirect('home')
+        return redirect('blog-home')
     return render(request, 'blog/delete.html', {'post':post})
 
 
@@ -74,4 +73,22 @@ def comment(request, pk):
     context = {'post':post, 'form':form, 'comments':comments}
     return render(request, 'blog/comment.html', context)
     
-    
+
+
+def post_drafts(request):
+    posts = Post.objects.filter(published_date__isnull=True)
+    context = {'posts':posts}
+    return render(request, 'blog/post_drafts.html', context)
+
+def publish(request):
+    #form = CreatePost()
+    #if request.method == 'POST':
+    form = CreatePost(request.POST)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        post.save()
+        post.publish()
+        return redirect('blog-home')
+    #context = {'form': form}
+    return render(request, 'blog/home.html')

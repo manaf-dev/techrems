@@ -4,11 +4,12 @@
 
 
     <a href="{% url 'create_post' %}">Create Blog</a>
+    <a href="{% url 'post_drafts' %}">View drafts</a>
 
     {% for post in posts %}
         <div class="post">
             <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title}}</a></h2>
-            <div class="date">{{post.created_date}}</div>
+            <div class="date">{{post.published_date}}</div>
             <p>{{post.content|truncatechars:255}}</p>
         </div>
         <p><small><strong>Comments:</strong> {{ post.comments.count }} </small></p>

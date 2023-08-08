@@ -6,6 +6,8 @@
         {{ form.as_p }}
 
         <input type="submit" value="Save">
+        <input type="submit" value="Publish" formaction="{% url 'publish' %}">
     </form>
+    
 
 {% endblock %}
