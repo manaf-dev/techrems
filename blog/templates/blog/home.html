@@ -11,6 +11,7 @@
             <div class="date">{{post.created_date}}</div>
             <p>{{post.content|truncatechars:255}}</p>
         </div>
+        <p><small><strong>Comments:</strong> {{ post.comments.count }} </small></p>
 
     {% endfor %}
 
