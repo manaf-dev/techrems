@@ -5,8 +5,12 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        <input type="submit" value="Save">
-        <input type="submit" value="Publish" formaction="{% url 'publish' %}">
+        <input type="submit" value="Save Draft">
+        {% if post.pk %}
+            <input type="submit" value="Submit" formaction="{% url 'publish' pk=post.pk%}">
+        {% else %}
+            <input type="submit" value="Publish" formaction="{% url 'publish_new' %}">
+        {% endif %}
     </form>
     
 

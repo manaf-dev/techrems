@@ -31,6 +31,23 @@ def create_post(request):
     context = {'form': form}
     return render(request, 'blog/create_post.html', context)
 
+def publish_new_post(request):
+    #form = CreatePost()
+    #if request.method == 'POST':
+    form = CreatePost(request.POST)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        post.save()
+        post.publish()
+        return redirect('blog-home')
+    #context = {'form': form}
+    return render(request, 'blog/home.html')
+
+def publish(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect('blog-home')
 
 def edit_post(request, pk):
     # Get the object from database by primary key (id).
@@ -45,7 +62,7 @@ def edit_post(request, pk):
             # Save the changes to the model using save method of our form class.
             form.save()
             return redirect('post_detail', pk=pk)
-    Context = {'form':form}
+    Context = {'form':form, 'post':post}
     return render(request, 'blog/create_post.html', Context)
 
 
@@ -76,19 +93,7 @@ def comment(request, pk):
 
 
 def post_drafts(request):
-    posts = Post.objects.filter(published_date__isnull=True)
+    posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
     context = {'posts':posts}
     return render(request, 'blog/post_drafts.html', context)
 
-def publish(request):
-    #form = CreatePost()
-    #if request.method == 'POST':
-    form = CreatePost(request.POST)
-    if form.is_valid():
-        post = form.save(commit=False)
-        post.author = request.user
-        post.save()
-        post.publish()
-        return redirect('blog-home')
-    #context = {'form': form}
-    return render(request, 'blog/home.html')
