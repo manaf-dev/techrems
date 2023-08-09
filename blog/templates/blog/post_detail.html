@@ -1,13 +1,15 @@
 {% extends 'main.html' %}
 {% block content %}
-
-    <div class="post">
-        <a href="{% url 'edit_post' pk=post.pk %}">Edit</a>
-        <a href="{% url 'delete_post' pk=post.pk %}">Delete</a>
+    <a href="{% url 'edit_post' pk=post.pk %}">Edit</a>
+    <a href="{% url 'delete_post' pk=post.pk %}">Delete</a>
+    <article class="content-section article-content">
         <h2>{{ post.title }}</h2>
-        <div class="date">{{ post.created_date }}</div>
+        <div class="article-metadata">
+            <a class="mt-2" href="#">{{ post.author }}</a>
+            <small class="text-muted">{{ post.published_date }}</small>
+        </div>
         <p>{{ post.content }} </p>
-    </div>
+    </article>
 
     <hr>
     <div class="comments">
