@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.urls import reverse
 
 # Create your models here.
 class Post(models.Model):
@@ -19,7 +20,11 @@ class Post(models.Model):
         return self.title
     
     class Meta:
-        ordering = ['-published_date']
+        ordering = ['-created_date']
+    
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'pk':self.pk})
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
