@@ -17,7 +17,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
-
+    paginate_by = 5
 
 
 class PostDetailView(DetailView):
@@ -121,6 +121,9 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #         return redirect('blog-home')
 #     return render(request, 'blog/delete.html', {'post':post})
 
+
+# class Comment(ListView):
+#     model = Comment
 
 def comment(request, pk):
     post = get_object_or_404(Post, pk=pk)

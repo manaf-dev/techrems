@@ -19,3 +19,12 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+        
+
+class Info(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.CharField(max_length=200)
+
+
+    def __str__(self):
+        return f'{self.user.username} bio'

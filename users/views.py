@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserInfoForm
 
 # Create your views here.
 
@@ -28,18 +28,22 @@ def profile(request):
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
+        info_form = UserInfoForm(request.POST, instance=request.user.info)
+
+        if u_form.is_valid() and p_form.is_valid() and info_form.is_valid():
             u_form.save()
             p_form.save()
+            info_form.save()
             messages.success(request, f'Your account has been updated!')
             return redirect('profile')
 
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-
+        info_form = UserInfoForm()
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'info_form': info_form
     }
     return render(request, 'users/profile.html', context)
