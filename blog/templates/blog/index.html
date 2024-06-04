@@ -1,0 +1,50 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+    {% for post in posts %}
+        <article>
+            <div class="article-head">
+                <a href=""><img src="{{post.author.profile.image.url}}" alt=""></a>
+                <div class="details">
+                    <p class="username"><a href="">@{{post.author.username}}</a></p>
+                    <p class="date">{{post.created_date|timesince}} ago</p>
+                    <hr>
+                </div>
+            </div>
+            <div class="article-body">
+                <div class="article-title">
+                    <h3><a href="">{{post.title}}</a></h3>
+                </div>
+                <p>
+                    {{post.content|truncatechars:300}}
+                </p>
+            </div>
+            <div class="article-footer">
+                <span class="likes">3 Likes</span>
+                <span class="comments">3 Comments</span>
+            </div>
+        </article>
+    {% endfor %}
+        
+{% endblock content %}
+
+
+{% block sidebar-content %}
+    <p class="head">Trending Articles</p>
+    <div class="sidebar-content">
+        <a href="">
+            <div class="side-content">
+                <p class="title">Article one title</p>
+                <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
+            </div>
+        </a>
+        <a href="">
+            <div class="side-content">
+                <p class="title">Article one title</p>
+                <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
+            </div>
+        </a>
+    </div>
+{% endblock sidebar-content %}
+    

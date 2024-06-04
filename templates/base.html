@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <title>Tech Rems Blog</title>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="{% static 'imgs/logo.png' %}" alt="Tech Rems logo">
+                <h2><a href="">Tech Rems</a></h2>  
+            </div>
+            <div class="search-bar">
+                <form action="" method="get">
+                    <input type="search" name="q" id="search" placeholder="Search for posts here...">
+                </form>
+            </div>
+            <div class="user-info">
+                <a href="">New Post</a>
+                <div class="user-avatar">
+                    <img src="{% static 'imgs/person.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <div class="main-content">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="messages {{message.tags}}">
+                            <p>{{message}}</p>
+                        </div>
+                    {% endfor %}    
+                {% endif %}
+                
+                {% block content %}{% endblock content %}
+            </div>
+            <aside class="sidebar">
+                <div class="sidebar-container">
+                    {% block sidebar-content %}{% endblock sidebar-content %}
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>

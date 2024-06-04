@@ -15,7 +15,7 @@ from .forms import CreatePost, CreateComment
 
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/home.html'
+    template_name = 'blog/index.html'
     context_object_name = 'posts'
     paginate_by = 5
 
@@ -34,6 +34,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
     
+    # Set author by the login user automatically
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -122,24 +123,25 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #     return render(request, 'blog/delete.html', {'post':post})
 
 
-# class Comment(ListView):
-#     model = Comment
 
-def comment(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    comments = Comment.objects.filter(post=post)
-    form = CreateComment()
-    if request.method == 'POST':
-        form = CreateComment(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.author = request.user
-            new_comment.post = post
-            new_comment.save()
-            return redirect('post_detail', pk=post.pk)
 
-    context = {'post':post, 'form':form, 'comments':comments}
-    return render(request, 'blog/comment.html', context)
+
+
+# def comment(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     comments = Comment.objects.filter(post=post)
+#     form = CreateComment()
+#     if request.method == 'POST':
+#         form = CreateComment(request.POST)
+#         if form.is_valid():
+#             new_comment = form.save(commit=False)
+#             new_comment.author = request.user
+#             new_comment.post = post
+#             new_comment.save()
+#             return redirect('post_detail', pk=post.pk)
+
+#     context = {'post':post, 'form':form, 'comments':comments}
+#     return render(request, 'blog/comment.html', context)
     
 
 
