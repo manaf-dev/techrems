@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <title>Tech Rems Blog</title>
 </head>
@@ -13,7 +15,7 @@
         <div class="header-container">
             <div class="logo">
                 <img src="{% static 'imgs/logo.png' %}" alt="Tech Rems logo">
-                <h2><a href="">Tech Rems</a></h2>  
+                <h2><a href="{% url 'blog-home' %}">Tech Rems</a></h2>  
             </div>
             <div class="search-bar">
                 <form action="" method="get">
@@ -21,7 +23,7 @@
                 </form>
             </div>
             <div class="user-info">
-                <a href="">New Post</a>
+                <a href="{% url 'create_post' %}">New Post</a>
                 <div class="user-avatar">
                     <img src="{% static 'imgs/person.png' %}" alt="">
                 </div>
@@ -48,5 +50,6 @@
             </aside>
         </div>
     </main>
+    <script src="{% static "js/script.js" %}"></script>
 </body>
 </html>

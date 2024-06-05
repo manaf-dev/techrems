@@ -14,15 +14,15 @@
             </div>
             <div class="article-body">
                 <div class="article-title">
-                    <h3><a href="">{{post.title}}</a></h3>
+                    <h3><a href="{% url 'post_detail' post.id %}">{{post.title}}</a></h3>
                 </div>
                 <p>
                     {{post.content|truncatechars:300}}
                 </p>
             </div>
             <div class="article-footer">
-                <span class="likes">3 Likes</span>
-                <span class="comments">3 Comments</span>
+                <span class="likes">{{post.total_likes}} Like{{post.total_likes|pluralize}}</span>
+                <span class="comments">{{post.comments.count}} Comment{{post.comments.count|pluralize}}</span>
             </div>
         </article>
     {% endfor %}

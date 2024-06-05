@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 
 from .models import Post, Comment
 from .forms import CreatePost, CreateComment
@@ -20,14 +21,20 @@ class PostListView(ListView):
     paginate_by = 5
 
 
-class PostDetailView(DetailView):
-    model = Post
+# class PostDetailView(DetailView):
+#     model = Post
 
-# def post_detail(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     comments = Comment.objects.filter(post=post)
-#     context = {'post':post, 'comments':comments}
-#     return render(request, 'blog/post_detail.html', context)
+#     def get_context_data(self, **kwargs) -> dict[str, Any]:
+#         context = super().get_context_data(**kwargs)
+#         context["comments"] = Comment.objects.filter(post=self.object)
+#         return context
+    
+def postDetail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = Comment.objects.filter(post=post).order_by('-date_posted')
+    total_likes = post.total_likes()
+    context = {'post':post, 'comments':comments, 'total_likes':total_likes}
+    return render(request, 'blog/post_detail.html', context)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -124,26 +131,29 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
-
-
-
-# def comment(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     comments = Comment.objects.filter(post=post)
-#     form = CreateComment()
-#     if request.method == 'POST':
-#         form = CreateComment(request.POST)
-#         if form.is_valid():
-#             new_comment = form.save(commit=False)
-#             new_comment.author = request.user
-#             new_comment.post = post
-#             new_comment.save()
-#             return redirect('post_detail', pk=post.pk)
-
-#     context = {'post':post, 'form':form, 'comments':comments}
-#     return render(request, 'blog/comment.html', context)
+@login_required
+def comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        Comment.objects.create(
+            author=request.user,
+            post=post,
+            text=comment
+        )
+        return redirect('post_detail', post.id)
+    return redirect('post_detail', post.id)
     
 
+def likePost(request, pk):
+    post = Post.objects.get(id=pk)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+    return JsonResponse({'total_likes':post.total_likes(), 'liked':liked})
 
 def post_drafts(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')

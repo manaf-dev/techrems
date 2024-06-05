@@ -114,7 +114,7 @@ header {
 }
 
 .main-content article {
-  padding: 10px 20px;
+  padding: 20px 30px;
   border: 0.5px solid #003d51;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -162,8 +162,8 @@ header {
   margin-top: 15px;
 }
 
-.main-content article .article-footer .likes{
-  margin-right: 30px;
+.main-content article .article-footer .comments{
+  margin-left: 30px;
 }
 
 
@@ -223,3 +223,101 @@ header {
 .messages.info {
   background-color: #015c64c8;
 }
+
+
+
+/* Detail page */
+.post-detail-page .article-head .details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-detail-page .article-head img {
+  height: 65px;
+  width: 65px;
+}
+
+.post-detail-page .article-footer .likes a {
+  color: #000;
+}
+
+.post-detail-page .article-footer button,
+.post-detail-page .article-footer button:focus {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: none;
+}
+
+
+.comments-section {
+  border: 1px solid #003d51;
+  border-radius: 7px;
+  padding: 10px 20px;
+}
+
+.comments-section .comments {
+  margin: 15px;
+}
+
+.comments-section .comments .comment {
+  font-size: 0.8em;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 0.1px solid rgb(181, 180, 180);
+  margin-bottom: 10px;
+}
+
+.comments-section .comments .comment .comment-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.comments-section .comment-head a {
+  color: #003d51;
+}
+
+.comments-section .comments .comment img {
+  height: 20px;
+  width: 20px;
+  border: 1px solid gray;
+  border-radius: 50%;
+}
+
+.comments-section form {
+  margin: 0 20px;
+}
+
+.comments-section form textarea,
+.comments-section form input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.comments-section form textarea {
+  width: 100%;
+  height: 100px;
+  max-height: fit-content;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
+textarea:focus {
+  border: 2px solid gray;
+  outline: none;
+}
+
+.comments-section .btn.comment-btn {
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  background-color: #003d51;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+}
+
