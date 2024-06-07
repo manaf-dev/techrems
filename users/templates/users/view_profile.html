@@ -13,9 +13,9 @@
         </div>
         
         {% if request.user == user %}
-            <a class="btn btn-primary" href="{% url 'profile' %}">Update</a>
+            <a class="btn btn-primary mt-4" href="{% url 'profile' %}">Update</a>
         {% else %}
-            <a class="btn btn-primary" href="">Follow</a>
+            <a class="btn btn-primary mt-4" href="">Follow</a>
         {% endif %}
             
     </div>

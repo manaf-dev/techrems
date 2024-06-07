@@ -27,7 +27,7 @@ ul {
 a,
 a:hover {
   text-decoration: none;
-  color: #fafafa;
+  /* color: #fafafa; */
 }
 
 header {
@@ -36,7 +36,7 @@ header {
     background-color: #003d51;
     position: fixed;
     top: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     z-index: 999;
     display: flex;
 }
@@ -101,6 +101,41 @@ header {
   border: 1px solid #fff;
 }
 
+.header-container .logout {
+  position: absolute;
+  visibility: hidden;
+  background-color: #e8e7e7;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  margin-top: 5px;
+  transition: 0.3s ease all;
+}
+.logout button, .logout button:focus {
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  outline: none;
+}
+
+.header-container .user-avatar:hover > .logout {
+  visibility: visible;
+}
+
+.header-container .user-info .signup,
+.header-container .user-info .login {
+  font-size: 1em;
+}
+
+.header-container .user-info .signup,
+.header-container .user-info .login:hover {
+  background-color: unset;
+  color: #fafafa;
+  border: 1px solid #fafafa;
+}
+.header-container .user-info .signup:hover {
+  color: #003d51;
+  /* border: none; */
+}
 
 /* MAIN STYLES */
 .main-container {
@@ -375,4 +410,13 @@ textarea:focus {
 
 .profile-content .media .media-body {
   text-align: center;
+}
+
+.content-section {
+  width: 50%;
+  margin: auto;
+  background-color: #fafafa;
+  padding: 20px 30px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
 }

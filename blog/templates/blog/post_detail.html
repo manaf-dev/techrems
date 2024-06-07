@@ -55,7 +55,7 @@
                     <div class="comment">
                         <div class="comment-head">
                             <img src="{{comment.author.profile.image.url}}" alt="">
-                            <p class="username"><a href="">{% if comment.author == post.author %} You {%else%} @{{comment.author.username}} {% endif %}</a></p>
+                            <p class="username"><a href="{% url 'view-profile' comment.author.username %}">{% if comment.author == post.author %} You {%else%} @{{comment.author.username}} {% endif %}</a></p>
                             <p class="date">{{comment.date_posted|timesince}} ago</p>
                         </div>
                         <div class="comment-body">
