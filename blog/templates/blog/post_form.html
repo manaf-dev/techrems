@@ -2,26 +2,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
+<div class="create-form">
+    <p class="form-title">Create Your Post</p>
     <form action="" method="POST">
         {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Create Post</legend>
             {{ form|crispy }}
-        </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Publish</button>
-        </div>
-        
-
-        
+        </div>     
     </form>
-    
-
+</div>
 {% endblock %}
-<!-- <input type="submit" value="Save Draft">
-        {% if post.pk %}
-            <input type="submit" value="Submit" formaction="{% url 'publish' pk=post.pk%}">
-        {% else %}
-            <input type="submit" value="Publish" formaction="{% url 'publish_new' %}">
-        {% endif %} -->

@@ -25,29 +25,23 @@
             <div class="user-info">
                 <a href="{% url 'create_post' %}">New Post</a>
                 <div class="user-avatar">
-                    <img src="{% static 'imgs/person.png' %}" alt="">
+                    <img src="{{user.profile.image.url}}" alt="">
                 </div>
             </div>
         </div>
     </header>
     <main>
         <div class="main-container">
-            <div class="main-content">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="messages {{message.tags}}">
-                            <p>{{message}}</p>
-                        </div>
-                    {% endfor %}    
-                {% endif %}
-                
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">
+                        <p>{{message}}</p>
+                    </div>
+                {% endfor %}    
+            {% endif %}
+              
                 {% block content %}{% endblock content %}
-            </div>
-            <aside class="sidebar">
-                <div class="sidebar-container">
-                    {% block sidebar-content %}{% endblock sidebar-content %}
-                </div>
-            </aside>
+                
         </div>
     </main>
     <script src="{% static "js/script.js" %}"></script>

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="view-profile main-content">
+    <div class="media">
+        <img class="rounded-circle" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.first_name }} {{user.last_name}}</h2>
+            <p class="text-secondary">@{{ user.username }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p><strong>Bio:</strong></p>
+            <p>{{user.profile.bio}}</p>
+        </div>
+        
+        {% if request.user == user %}
+            <a class="btn btn-primary" href="{% url 'profile' %}">Update</a>
+        {% else %}
+            <a class="btn btn-primary" href="">Follow</a>
+        {% endif %}
+            
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-container">
+            <p class="head">Recent Posts from {{user.username}}</p>
+            <div class="sidebar-content">
+                <a href="">
+                    <div class="side-content">
+                        <p class="title">Article one title</p>
+                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="side-content">
+                        <p class="title">Article one title</p>
+                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </aside>
+</div>
+
+{% endblock content %}

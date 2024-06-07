@@ -84,7 +84,7 @@ header {
 .header-container .user-info a {
     background-color: #fff;
     font-size: 1.1em;
-    padding: 10px ;
+    padding: 5px 10px;
     color: #003d51;
     border-radius: 5px;
 }
@@ -94,7 +94,8 @@ header {
 }
 
 .header-container .user-info img {
-  height: 30px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   cursor: pointer;
   border: 1px solid #fff;
@@ -105,14 +106,16 @@ header {
 .main-container {
     margin-top: 75px;
     padding: 50px 70px;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+  }
+  
+  .main-container .main-content {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 }
-
-.main-container .main-content {
-    margin-right: 50px;
+.main-content .articles,
+.detail-content {
+  margin-right: 50px;
 }
-
 .main-content article {
   padding: 20px 30px;
   border: 0.5px solid #003d51;
@@ -135,6 +138,15 @@ header {
   color: #003d51;
 }
 
+.article-head .details p,
+.comment-head p,
+.profile-content p,
+.view-profile p,
+hr {
+  margin: 0;
+  /* margin-bottom: 0; */
+}
+
 .main-content article .article-head .details .date{
   margin-bottom: 5px;
   font-size: 0.8em;
@@ -142,9 +154,9 @@ header {
 }
 
 
-.main-content article img {
-  height: 40px;
-  width: 40px;
+.main-content .article-head img {
+  height: 50px;
+  width: 50px;
   border: 1px solid #000;
   border-radius: 50%;
 }
@@ -160,6 +172,8 @@ header {
 
 .main-content article .article-footer {
   margin-top: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .main-content article .article-footer .comments{
@@ -167,7 +181,7 @@ header {
 }
 
 
-.main-container .sidebar .sidebar-container {
+.sidebar .sidebar-container {
   border: 1px solid #003d51;
 }
 
@@ -204,29 +218,19 @@ header {
 }
 
 
-.messages {
+.alert {
   margin-bottom: 15px;
-  padding: 7px 30px;
-  color: #fff;
-  font-size: 1.1em;
-  background-color: #018b6fc8;
 }
 
-.messages.error {
-  background-color: #f00000b0;
-}
-
-.messages.success {
-  background-color: #008000c1;
-}
-
-.messages.info {
-  background-color: #015c64c8;
-}
 
 
 
 /* Detail page */
+.post-detail-page .article-head .actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 .post-detail-page .article-head .details {
   display: flex;
   align-items: center;
@@ -247,7 +251,7 @@ header {
   border: none;
   outline: none;
   cursor: pointer;
-  background-color: none;
+  margin-left: 10px;
 }
 
 
@@ -321,3 +325,54 @@ textarea:focus {
   cursor: pointer;
 }
 
+
+/* FORM STYLE */
+.create-form {
+  width: 60%;
+  margin: auto;
+  padding: 20px 30px;
+  border: 1px solid #003d51;
+  border-radius: 10px;
+}
+
+.create-form .form-title {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+.profile-content {
+  width: 60%;
+  margin: auto;
+  padding: 20px 30px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  background-color: #fafafa;
+}
+
+.view-profile.main-content {
+  grid-template-columns: 3fr 2fr;
+}
+
+.profile-content img,
+.view-profile img {
+  height: 125px;
+  width: 125px;
+  margin-bottom: 16px;
+}
+
+.profile-content .media,
+.view-profile .media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+  padding: 25px;
+  margin-right: 50px;
+}
+
+.profile-content .media .media-body {
+  text-align: center;
+}

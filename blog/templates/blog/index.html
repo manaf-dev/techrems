@@ -1,13 +1,15 @@
 {% extends "base.html" %} 
 
 {% block content %}
+<div class="main-content">
 
-    {% for post in posts %}
+    <div class="articles">
+        {% for post in posts %}
         <article>
             <div class="article-head">
-                <a href=""><img src="{{post.author.profile.image.url}}" alt=""></a>
+                <a href="{% url 'view-profile' post.author.username %}"><img src="{{post.author.profile.image.url}}" alt=""></a>
                 <div class="details">
-                    <p class="username"><a href="">@{{post.author.username}}</a></p>
+                    <p class="username"><a href="{% url 'view-profile' post.author.username %}">@{{post.author.username}}</a></p>
                     <p class="date">{{post.created_date|timesince}} ago</p>
                     <hr>
                 </div>
@@ -25,26 +27,26 @@
                 <span class="comments">{{post.comments.count}} Comment{{post.comments.count|pluralize}}</span>
             </div>
         </article>
-    {% endfor %}
-        
-{% endblock content %}
-
-
-{% block sidebar-content %}
-    <p class="head">Trending Articles</p>
-    <div class="sidebar-content">
-        <a href="">
-            <div class="side-content">
-                <p class="title">Article one title</p>
-                <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
-            </div>
-        </a>
-        <a href="">
-            <div class="side-content">
-                <p class="title">Article one title</p>
-                <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
-            </div>
-        </a>
+        {% endfor %}
     </div>
-{% endblock sidebar-content %}
-    
+    <aside class="sidebar">
+        <div class="sidebar-container">
+            <p class="head">Trending Articles</p>
+            <div class="sidebar-content">
+                <a href="">
+                    <div class="side-content">
+                        <p class="title">Article one title</p>
+                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="side-content">
+                        <p class="title">Article one title</p>
+                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </aside>
+</div>
+{% endblock content %}

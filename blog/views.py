@@ -20,14 +20,6 @@ class PostListView(ListView):
     context_object_name = 'posts'
     paginate_by = 5
 
-
-# class PostDetailView(DetailView):
-#     model = Post
-
-#     def get_context_data(self, **kwargs) -> dict[str, Any]:
-#         context = super().get_context_data(**kwargs)
-#         context["comments"] = Comment.objects.filter(post=self.object)
-#         return context
     
 def postDetail(request, pk):
     post = get_object_or_404(Post, pk=pk)

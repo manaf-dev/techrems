@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserInfoForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+
 
 # Create your views here.
 
@@ -21,6 +23,12 @@ def register(request):
     return render(request, 'users/registration.html', context)
 
 
+def viewProfile(request, username):
+    user = User.objects.get(username=username)
+    context = {'user':user}
+    return render(request, 'users/view_profile.html', context)
+
+
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -28,22 +36,18 @@ def profile(request):
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
-        info_form = UserInfoForm(request.POST, instance=request.user.info)
 
-        if u_form.is_valid() and p_form.is_valid() and info_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            info_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('profile')
+            return redirect('view-profile', request.user.username)
 
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-        info_form = UserInfoForm()
     context = {
         'u_form': u_form,
-        'p_form': p_form,
-        'info_form': info_form
+        'p_form': p_form
     }
     return render(request, 'users/profile.html', context)
