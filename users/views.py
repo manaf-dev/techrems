@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
-
+from blog.models import Post
 # Create your views here.
 
 def register(request):
@@ -24,8 +24,9 @@ def register(request):
 
 
 def viewProfile(request, username):
+    recent_posts = Post.objects.order_by('-created_date')[:3]
     user = User.objects.get(username=username)
-    context = {'user':user}
+    context = {'user':user, 'recent_posts':recent_posts}
     return render(request, 'users/view_profile.html', context)
 
 

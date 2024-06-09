@@ -1,0 +1,7 @@
+Example Usage
+Background Color: #ffffff (White) or #e0e0e0 (Light Gray)
+Header/Footer Background: #003d51 (Dark Teal)
+Primary Buttons/Links: #cc6e02 (Burnt Orange)
+Secondary Buttons/Links: #80c0ff (Light Teal)
+Text Color: #000000 (Black) on light backgrounds, #ffffff (White) on dark backgrounds
+Hover Effects: Use lighter shades of the primary colors (e.g., #ffb380 for burnt orange and #80c0ff for dark teal)

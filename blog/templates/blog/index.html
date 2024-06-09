@@ -24,9 +24,14 @@
             </div>
             <div class="article-footer">
                 <span class="likes">{{post.total_likes}} Like{{post.total_likes|pluralize}}</span>
+                <span class="comments">{{post.views}} Read{{post.views|pluralize}}</span>
                 <span class="comments">{{post.comments.count}} Comment{{post.comments.count|pluralize}}</span>
             </div>
         </article>
+
+        {% empty %}
+            <p><em>No post found! Try another title</em></p>
+            <p><a href="{% url 'blog-home' %}">Home page</a></p>
         {% endfor %}
 
         {% if is_paginated %}
@@ -55,18 +60,15 @@
         <div class="sidebar-container">
             <p class="head">Trending Articles</p>
             <div class="sidebar-content">
-                <a href="">
-                    <div class="side-content">
-                        <p class="title">Article one title</p>
-                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
-                    </div>
-                </a>
-                <a href="">
-                    <div class="side-content">
-                        <p class="title">Article one title</p>
-                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
-                    </div>
-                </a>
+                
+                {% for post in trending_posts %} 
+                    <a href="{% url 'post_detail' post.id %}">
+                        <div class="side-content">
+                            <p class="title">{{post.title}}</p>
+                            <p class="body">{{post.content|truncatechars:100}}</p>
+                        </div>
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </aside>

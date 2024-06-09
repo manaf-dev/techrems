@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import Post, Comment
 from .forms import CreatePost, CreateComment
@@ -18,14 +19,31 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'posts'
-    paginate_by = 5
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(title__icontains=query)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['trending_posts'] = Post.objects.order_by('-views', '-likes')[:3]
+        return context
+        
+    
 
     
 def postDetail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    post.views += 1
+    post.save()
     comments = Comment.objects.filter(post=post).order_by('-date_posted')
     total_likes = post.total_likes()
-    context = {'post':post, 'comments':comments, 'total_likes':total_likes}
+    trending_posts = Post.objects.filter(author=post.author).order_by('-views', '-likes')[:3]
+    context = {'post':post, 'comments':comments, 'total_likes':total_likes, 'trending_posts':trending_posts}
     return render(request, 'blog/post_detail.html', context)
 
 

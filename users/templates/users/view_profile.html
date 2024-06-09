@@ -22,20 +22,16 @@
 
     <aside class="sidebar">
         <div class="sidebar-container">
-            <p class="head">Recent Posts from {{user.username}}</p>
+            <p class="head">Recent Posts from {% if user == request.user%}You{%else%} {{user.username}}{%endif%}</p>
             <div class="sidebar-content">
-                <a href="">
-                    <div class="side-content">
-                        <p class="title">Article one title</p>
-                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
-                    </div>
-                </a>
-                <a href="">
-                    <div class="side-content">
-                        <p class="title">Article one title</p>
-                        <p class="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cum sequi porro esse obcaecati quam laborum veniam dolores atque, ab incidunt.</p>
-                    </div>
-                </a>
+                {% for post in recent_posts %} 
+                    <a href="{% url 'post_detail' post.id %}">
+                        <div class="side-content">
+                            <p class="title">{{post.title}}</p>
+                            <p class="body">{{post.content|truncatechars:100}}</p>
+                        </div>
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </aside>
