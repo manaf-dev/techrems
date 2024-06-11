@@ -4,7 +4,8 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import Post, Comment
 from .forms import CreatePost, CreateComment
@@ -47,9 +48,10 @@ def postDetail(request, pk):
     return render(request, 'blog/post_detail.html', context)
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Post
     fields = ['title', 'content']
+    success_message = 'Your post is created successfully.'
     
     # Set author by the login user automatically
     def form_valid(self, form):
@@ -57,9 +59,10 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
+    success_message = 'Your post is updated successfully.'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -120,9 +123,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 #     return render(request, 'blog/create_post.html', Context)
 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     model = Post
     success_url = '/'
+    success_message = 'Your post was deleted.'
 
     def test_func(self):
         post = self.get_object()
@@ -141,8 +145,11 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
-@login_required
+# @login_required
 def comment(request, pk):
+    if not request.user.is_authenticated:
+        messages.info(request, f'Login or Sign up to post your comment.')
+        return redirect('/login/?next=%s' % request.path)
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
         comment = request.POST.get('comment')
@@ -151,11 +158,16 @@ def comment(request, pk):
             post=post,
             text=comment
         )
+        messages.success(request, 'Your comments was posted.')
         return redirect('post_detail', post.id)
     return redirect('post_detail', post.id)
     
 
 def likePost(request, pk):
+    if not request.user.is_authenticated:
+        messages.info(request, f'Login or Sign up to like a post.')
+        return redirect('/login/?next=%s' % request.path)
+        
     post = Post.objects.get(id=pk)
     if request.user in post.likes.all():
         post.likes.remove(request.user)

@@ -19,13 +19,13 @@
             </div>
             <div class="search-bar">
                 <form action="" method="get">
-                    <input type="search" name="q" id="search" placeholder="Search for posts here...">
+                    <input type="search" name="q" id="search" placeholder="Search posts here...">
                 </form>
             </div>
             
             {% if user.is_authenticated %}
                 <div class="user-info">
-                    <a href="{% url 'create_post' %}">New Post</a>
+                    <a href="{% url 'create_post' %}" class="btn btn-info new-post">New Post</a>
                     <div class="user-avatar">
                         <img src="{{user.profile.image.url}}" alt="">
                         <div class="logout">
@@ -38,8 +38,8 @@
                 </div>
                 {% else %}
                 <div class="user-info">
-                    <a href="{% url 'login' %}" class="login">Login</a>
-                    <a href="{% url 'register' %}" class="signup">Sign up</a>
+                    <a href="{% url 'login' %}" class="btn btn-info">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-info">Sign up</a>
                 </div>
             {% endif %}
                 
@@ -59,34 +59,14 @@
                 {% block content %}{% endblock content %}
                 
         </div>
+        
     </main>
     <footer>
-        <div class="footer-content">
-            <div class="footer-section about">
-                <h4>About</h4>
-                <p>This is a blog site where you can find various articles on different topics.</p>
-            </div>
-            <div class="footer-section links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="{% url 'blog-home' %}">Home</a></li>
-                    <li><a href="/">About</a></li>
-                    <li><a href="/">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section social">
-                <h4>Social Media</h4>
-                <ul>
-                    <li><a href="https://twitter.com/" target="_blank">Twitter</a></li>
-                    <li><a href="https://facebook.com/" target="_blank">Facebook</a></li>
-                    <li><a href="https://youtube.com/@techrems" target="_blank">Youtube</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2024 Tech Rems Blog | Designed by Tech Rems
+        <div class="footer">
+            &copy; 2024 Tech Rems Blog
         </div>
     </footer>
+            
     <script src="{% static "js/script.js" %}"></script>
 </body>
 </html>

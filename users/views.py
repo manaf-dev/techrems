@@ -22,16 +22,22 @@ def register(request):
     context = {'form': form}
     return render(request, 'users/registration.html', context)
 
-
+# @login_required()
 def viewProfile(request, username):
+    if not request.user.is_authenticated:
+        messages.info(request, f'Login or Sign up to see the profile of {username}.')
+        return redirect('/login/?next=%s' % request.path)
     recent_posts = Post.objects.order_by('-created_date')[:3]
     user = User.objects.get(username=username)
     context = {'user':user, 'recent_posts':recent_posts}
     return render(request, 'users/view_profile.html', context)
 
 
-@login_required
+# @login_required
 def profile(request):
+    if not request.user.is_authenticated:
+        messages.info(request, f'Login or Sign up to see your profile.')
+        return redirect('/login/?next=%s' % request.path)
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,

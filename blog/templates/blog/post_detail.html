@@ -8,7 +8,7 @@
                 <a href="{% url 'view-profile' post.author.username %}"><img src="{{post.author.profile.image.url}}" alt=""></a>
                 <div class="details">
                     <div>
-                        <p class="username"><a href="{% url 'view-profile' post.author.username %}">@{{post.author.username}}</a></p>
+                        <p class="username"><a href="{% url 'view-profile' post.author.username %}">{{post.author.first_name}} {{post.author.last_name}}</a><span>@{{post.author.username}}</span></p>
                         <p class="date">Posted {{post.created_date|timesince}} ago</p>
                     </div>
                     {% if post.author == user %}
@@ -93,4 +93,4 @@
         </div>
     </aside>
 </div>
-{% endblock %}
+{% endblock content%}
