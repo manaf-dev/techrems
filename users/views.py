@@ -28,8 +28,8 @@ def viewProfile(request, username):
         messages.info(request, f'Login or Sign up to see the profile of {username}.')
         return redirect('/login/?next=%s' % request.path)
     recent_posts = Post.objects.order_by('-created_date')[:3]
-    user = User.objects.get(username=username)
-    context = {'user':user, 'recent_posts':recent_posts}
+    user_obj = User.objects.get(username=username)
+    context = {'user_obj':user_obj, 'recent_posts':recent_posts}
     return render(request, 'users/view_profile.html', context)
 
 

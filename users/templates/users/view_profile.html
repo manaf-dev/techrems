@@ -2,30 +2,33 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="view-profile main-content">
-    <div class="media">
-        <img class="rounded-circle" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.first_name }} {{user.last_name}}</h2>
-            <p class="text-secondary">@{{ user.username }}</p>
-            <p>Email: {{ user.email }}</p>
-            <p><strong>Bio:</strong></p>
-            <p>{{user.profile.bio}}</p>
-        </div>
-        
-        {% if request.user == user %}
-            <a class="btn btn-primary mt-4" href="{% url 'profile' %}">Update</a>
-        {% else %}
-            <a class="btn btn-primary mt-4" href="">Follow</a>
-        {% endif %}
+    <div>
+        <a href="{% url 'blog-home' %}" class="btn btn-secondary mb-3">Home</a>
+        <div class="media">
+            <img class="rounded-circle" src="{{ user_obj.profile.image.url }}">
+            <div class="media-body">
+                <h2 class="account-heading">{{ user_obj.first_name }} {{user_obj.last_name}}</h2>
+                <p class="text-secondary">@{{ user_obj.username }}</p>
+                <p>Email: {{ user_obj.email }}</p>
+                <p><strong>Bio:</strong></p>
+                <p>{{user_obj.profile.bio}}</p>
+            </div>
             
+            {% if user == user_obj %}
+                <a class="btn btn-primary mt-4" href="{% url 'profile' %}">Update</a>
+            {% else %}
+                <a class="btn btn-primary mt-4" href="">Follow</a>
+            {% endif %}
+                
+        </div>
     </div>
 
     <aside class="sidebar">
         <div class="sidebar-container">
-            <p class="head">Recent Posts from {% if user == request.user%}You{%else%} {{user.username}}{%endif%}</p>
+            <p class="head">Recent Posts from {% if user_obj == request.user%}You{%else%} {{user_obj.username}}{%endif%}</p>
             <div class="sidebar-content">
                 {% for post in recent_posts %} 
-                    <a href="{% url 'post_detail' post.id %}">
+                    <a href="{% url 'post_detail' slug=post.slug %}">
                         <div class="side-content">
                             <p class="title">{{post.title}}</p>
                             <p class="body">{{post.content|truncatechars:100}}</p>

@@ -68,5 +68,32 @@
     </footer>
             
     <script src="{% static "js/script.js" %}"></script>
+    <script>
+        let modal = document.getElementById("shareModal");
+        let btn = document.querySelector(".shareButton");
+        let span = document.getElementsByClassName("close")[0];
+    
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+    
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+    
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    
+        function copyToClipboard() {
+          var copyText = document.getElementById("shareLink");
+          copyText.select();
+          copyText.setSelectionRange(0, 99999); // For mobile devices
+          document.execCommand("copy");
+          alert("Copied the link: " + copyText.value);
+        }
+    </script>
 </body>
 </html>

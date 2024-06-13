@@ -16,7 +16,7 @@
             </div>
             <div class="article-body">
                 <div class="article-title">
-                    <h3><a href="{% url 'post_detail' post.id %}">{{post.title}}</a></h3>
+                    <h3><a href="{% url 'post_detail' slug=post.slug %}">{{post.title}}</a></h3>
                 </div>
                 <p>
                     {{post.content|truncatechars:300}}
@@ -61,7 +61,7 @@
             <div class="sidebar-content">
                 
                 {% for post in trending_posts %} 
-                    <a href="{% url 'post_detail' post.id %}">
+                    <a href="{% url 'post_detail' slug=post.slug %}">
                         <div class="side-content">
                             <p class="title">{{post.title}}</p>
                             <p class="body">{{post.content|truncatechars:100}}</p>

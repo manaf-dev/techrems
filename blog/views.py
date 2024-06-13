@@ -37,8 +37,9 @@ class PostListView(ListView):
     
 
     
-def postDetail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def postDetail(request, slug):
+    # print(request.build_absolute_uri)
+    post = get_object_or_404(Post, slug=slug)
     post.views += 1
     post.save()
     comments = Comment.objects.filter(post=post).order_by('-date_posted')
@@ -51,6 +52,7 @@ def postDetail(request, pk):
 class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Post
     fields = ['title', 'content']
+    success_url = '/'
     success_message = 'Your post is created successfully.'
     
     # Set author by the login user automatically
@@ -62,6 +64,7 @@ class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
+    success_url = '/'
     success_message = 'Your post is updated successfully.'
 
     def form_valid(self, form):
@@ -146,11 +149,11 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
 
 
 # @login_required
-def comment(request, pk):
+def comment(request, slug):
     if not request.user.is_authenticated:
         messages.info(request, f'Login or Sign up to post your comment.')
         return redirect('/login/?next=%s' % request.path)
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
         comment = request.POST.get('comment')
         Comment.objects.create(
@@ -159,16 +162,16 @@ def comment(request, pk):
             text=comment
         )
         messages.success(request, 'Your comments was posted.')
-        return redirect('post_detail', post.id)
-    return redirect('post_detail', post.id)
+        return redirect('post_detail', post.slug)
+    return redirect('post_detail', post.slug)
     
 
-def likePost(request, pk):
+def likePost(request, slug):
     if not request.user.is_authenticated:
         messages.info(request, f'Login or Sign up to like a post.')
         return redirect('/login/?next=%s' % request.path)
         
-    post = Post.objects.get(id=pk)
+    post = Post.objects.get(slug=slug)
     if request.user in post.likes.all():
         post.likes.remove(request.user)
         liked = False

@@ -17,8 +17,7 @@ $(document).ready(function(){
                     console.log('unliked')
                 }
                 $('.likes').text(response.total_likes)
-                
             }
         })
-    })
-})
+    });
+});
